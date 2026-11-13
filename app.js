@@ -2,7 +2,7 @@
 var m=document.getElementById('modal'),f=document.getElementById('f'),mode='drive';
 var day=document.getElementById('day'),time=document.getElementById('time');
 var D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function fillDays(){day.innerHTML='';var t=new Date();for(var i=0,n=0;n<14&&i<20;i++){var x=new Date(t.getFullYear(),t.getMonth(),t.getDate()+i);if(x.getDay()===0)continue;n++;var o=document.createElement('option');o.value=(i===0?'Today, ':i===1?'Tomorrow, ':'')+D[x.getDay()]+' '+M[x.getMonth()]+' '+x.getDate()+', '+x.getFullYear();o.textContent=o.value;o.dataset.i=i;day.appendChild(o);}fillTimes();}
+function fillDays(){day.innerHTML='';var t=new Date();for(var i=0,n=0;n<14&&i<20;i++){var x=new Date(t.getFullYear(),t.getMonth(),t.getDate()+i);if(x.getDay()===0)continue;n++;var o=document.createElement('option');o.value=(i===0?'Today, ':i===1?'Tomorrow, ':'')+D[x.getDay()]+' '+M[x.getMonth()]+' '+x.getDate()+', '+x.getFullYear();o.textContent=o.value.replace(/, \d{4}$/,'');o.dataset.i=i;day.appendChild(o);}fillTimes();}
 function fillTimes(){time.innerHTML='';var today=day.selectedOptions[0]&&day.selectedOptions[0].dataset.i==='0',now=new Date(),h0=today?now.getHours()+1:9;
 for(var h=9;h<=19;h++)for(var mm=0;mm<60;mm+=30){if(h===19&&mm>0)continue;if(today&&(h<h0||(h===h0&&mm<now.getMinutes())))continue;var o=document.createElement('option');var hh=h%12||12;o.value=hh+':'+(mm?'30':'00')+(h<12?' AM':' PM');o.textContent=o.value;time.appendChild(o);}
 if(!time.options.length){day.remove(day.selectedIndex);if(day.options.length)fillTimes();}}
